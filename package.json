@@ -2,14 +2,17 @@
   "name": "wrapito",
   "version": "0.0.0",
   "description": "🌯 🌯 Wrap you tests so that you can test both behaviour and components with less effort.",
+  "type": "module",
+  "types": "./types",
   "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
-    "test": "jest --ci --coverage --config config/jest.config.json",
-    "test:watch": "jest --watch --config config/jest.config.json",
-    "build": "NODE_ENV=production tsc",
-    "clean": "rm -rf dist",
-    "postbuild": "node scripts/copy-publish-files.js",
+    "test": "vitest",
+    "test:coverage": "vitest --coverage",
+    "build": "npm run clean && NODE_ENV=production tsc",
+    "build:types": "tsc --build",
+    "clean": "rimraf dist",
+    "postbuild": "node scripts/copy-publish-files.cjs",
     "publish-package": "npm run clean && npm run build && npm run postbuild && cd dist && npm publish"
   },
   "repository": {
@@ -39,6 +42,7 @@
   "dependencies": {
     "deep-equal": "^1.0.1",
     "object-hash": "^2.1.1",
+    "rimraf": "^5.0.1",
     "whatwg-fetch": "^3.5.0"
   },
   "devDependencies": {
@@ -51,25 +55,23 @@
     "@testing-library/jest-dom": "^4.2.0",
     "@testing-library/react": "^9.3.0",
     "@types/history": "^4.7.9",
-    "@types/jest": "^26.0.23",
-    "@types/react": "^17.0.16",
-    "babel-jest": "^24.8.0",
-    "jest": "^27.0.4",
-    "jest-junit": "^6.4.0",
-    "react": "^17.0.2",
+    "@types/react": "^16.0.16",
+    "@vitest/coverage-istanbul": "^0.32.2",
+    "prettier": "^2.8.8",
+    "react": "^16.0.2",
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
-    "ts-jest": "^27.0.3",
-    "typescript": "^4.3.3"
+    "typescript": "^4.3.3",
+    "vitest": "^0.32.2"
   },
   "peerDependencies": {
-    "jest": "*",
     "chalk": "*",
     "react": "*",
-    "react-dom": "*"
+    "react-dom": "*",
+    "vitest": "*"
   },
   "babel": {
     "presets": [
@@ -80,9 +82,5 @@
       "@babel/plugin-transform-runtime",
       "@babel/proposal-class-properties"
     ]
-  },
-  "jest-junit": {
-    "suiteName": "jest tests",
-    "output": "results/tests/jest-junit.xml"
   }
 }
