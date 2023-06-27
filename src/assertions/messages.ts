@@ -1,0 +1,78 @@
+import * as chalk from 'chalk'
+import { RequestOptions } from '../models'
+
+type Body = string | object | undefined
+
+const emptyErrorMessage = (path: string, options?: RequestOptions) => {
+  const message = options?.host
+    ? `🌯 Wrapito: ${options?.host}${path} ain't got called`
+    : `🌯 Wrapito: ${path} ain't got called`
+
+  return {
+    pass: false,
+    message: () => message,
+  }
+}
+
+const fetchLengthErrorMessage = (
+  path: string,
+  expectLength: number,
+  currentLength: number,
+) => ({
+  pass: false,
+  message: () =>
+    `🌯 Wrapito: ${path} is called ${currentLength} times, you expected ${expectLength} times`,
+})
+
+const methodDoesNotMatchErrorMessage = (
+  expected: string | undefined,
+  received: string | Array<string>,
+) => ({
+  pass: false,
+  message: () =>
+    `🌯 Wrapito: Fetch method does not match, expected ${expected} received ${received}`,
+})
+
+const bodyDoesNotMatchErrorMessage = (expected: Body, received: Body) => ({
+  pass: false,
+  message: () =>
+    `🌯 Wrapito: Fetch body does not match.
+Expected:
+${chalk.default.green(JSON.stringify(expected, null, ' '))}
+
+Received:
+${chalk.default.red(JSON.stringify(received, null, ' '))}`,
+})
+
+const doesNotHaveBodyErrorMessage = () => ({
+  pass: false,
+  message: () => '🌯 Wrapito: Unable to find body.',
+})
+
+const successMessage = () => ({
+  pass: true,
+  message: () => 'Test passing',
+})
+
+const haveBeenFetchedSuccessMessage = (
+  path: string,
+  options: { host?: string },
+) => {
+  const message = options?.host
+    ? `🌯 Wrapito: ${options.host}${path} is called`
+    : `🌯 Wrapito: ${path} is called`
+  return {
+    pass: true,
+    message: () => message,
+  }
+}
+
+export {
+  emptyErrorMessage,
+  fetchLengthErrorMessage,
+  methodDoesNotMatchErrorMessage,
+  bodyDoesNotMatchErrorMessage,
+  doesNotHaveBodyErrorMessage,
+  successMessage,
+  haveBeenFetchedSuccessMessage,
+}
