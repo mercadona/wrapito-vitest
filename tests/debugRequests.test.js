@@ -11,33 +11,6 @@ afterEach(() => {
   console.warn.mockRestore()
 })
 
-const GreetingComponent = () => {
-  const [name, setName] = useState('')
-
-  useEffect(() => {
-    async function fetchData() {
-      await fetch(
-        new Request('my-host/request1', {
-          method: 'POST',
-          body: JSON.stringify({ id: 1 }),
-        }),
-      )
-
-      const response = await fetch(
-        new Request('my-host/request2', {
-          method: 'POST',
-          body: JSON.stringify({ id: 2 }),
-        }),
-      )
-      const data = await response.json()
-      setName(data?.name)
-    }
-    fetchData()
-  }, [])
-
-  return <div>Hi {name}!</div>
-}
-
 it('should warn about the code making a request that has not being mocked', async () => {
   const consoleWarn = jest.spyOn(console, 'warn').mockImplementation()
 
