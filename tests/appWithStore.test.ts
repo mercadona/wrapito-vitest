@@ -1,5 +1,6 @@
 import { wrap, configure } from '../src'
-import { render , fireEvent } from '@testing-library/react'
+import { render, fireEvent } from '@testing-library/react'
+import { it, expect } from 'vitest'
 
 import { MyAppWithStore } from './components.mock'
 

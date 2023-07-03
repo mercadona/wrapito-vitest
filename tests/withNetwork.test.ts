@@ -1,6 +1,7 @@
 import React from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
 import { wrap, configure } from '../src/index'
+import { vi } from 'vitest'
 
 import {
   MyComponentWithNetwork,
@@ -17,7 +18,7 @@ it('should have network by default', async () => {
 })
 
 it('should have network with an array of requests', async () => {
-  jest.spyOn(console, 'warn')
+  vi.spyOn(console, 'warn')
   configure({ mount: render })
   wrap(MyComponentWithNetwork)
     .withNetwork([
@@ -39,7 +40,7 @@ it('should have network without responses', async () => {
 
 it('should resolve a request with delay after the specified time', async () => {
   configure({ mount: render })
-  jest.useFakeTimers()
+  vi.useFakeTimers()
   wrap(MyComponentWithNetwork)
     .withNetwork([
       {
@@ -57,17 +58,17 @@ it('should resolve a request with delay after the specified time', async () => {
     .mount()
 
   await screen.findByText('MyComponentWithNetwork')
-  jest.advanceTimersByTime(200)
+  vi.advanceTimersByTime(200)
   await screen.findByText('SUCCESS')
 
   expect(screen.getByText('SUCCESS')).toBeInTheDocument()
   expect(screen.queryByText('15')).not.toBeInTheDocument()
 
-  jest.advanceTimersByTime(500)
+  vi.advanceTimersByTime(500)
   await screen.findByText('15')
 
   expect(screen.getByText('15')).toBeInTheDocument()
-  jest.useRealTimers()
+  vi.useRealTimers()
 })
 
 it('should resolve all the responses waiting for an unrelated text', async () => {

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { render, cleanup, screen, fireEvent } from '@testing-library/react'
 import { wrap, configure } from '../src/index'
-import { MyComponentWithFeedback } from './components.mock'
+import { MyComponentWithFeedback, GreetingComponent } from './components.mock'
+import { vi } from 'vitest'
 
 configure({ defaultHost: 'my-host', mount: render })
 
@@ -12,7 +13,7 @@ afterEach(() => {
 })
 
 it('should warn about the code making a request that has not being mocked', async () => {
-  const consoleWarn = jest.spyOn(console, 'warn').mockImplementation()
+  const consoleWarn = vi.spyOn(console, 'warn').mockImplementation()
 
   wrap(GreetingComponent)
     .withNetwork({
@@ -42,7 +43,7 @@ it('should warn about the code making a request that has not being mocked', asyn
 })
 
 it('should warn about the code making a request that has not being mocked enough times', async () => {
-  const consoleWarn = jest.spyOn(console, 'warn').mockImplementation()
+  const consoleWarn = vi.spyOn(console, 'warn').mockImplementation()
   configure({ mount: render })
   wrap(MyComponentWithFeedback)
     .withNetwork({
@@ -68,7 +69,7 @@ it('should warn about the code making a request that has not being mocked enough
 
 describe('when no using withNetwork builder', () => {
   it('should warn about all the request being done by the production code', async () => {
-    const consoleWarn = jest.spyOn(console, 'warn').mockImplementation()
+    const consoleWarn = vi.spyOn(console, 'warn').mockImplementation()
 
     wrap(GreetingComponent).debugRequests().mount()
 
@@ -99,7 +100,7 @@ describe('when no using withNetwork builder', () => {
 })
 
 it('should not warn if the debugRequests feature is not used', async () => {
-  const consoleWarn = jest.spyOn(console, 'warn').mockImplementation()
+  const consoleWarn = vi.spyOn(console, 'warn').mockImplementation()
 
   wrap(GreetingComponent)
     .withNetwork({
@@ -119,7 +120,7 @@ it('should not warn if the debugRequests feature is not used', async () => {
 })
 
 it('should not warn if all the requests are being mocked', async () => {
-  const consoleWarn = jest.spyOn(console, 'warn').mockImplementation()
+  const consoleWarn = vi.spyOn(console, 'warn').mockImplementation()
 
   wrap(GreetingComponent)
     .withNetwork([
@@ -149,7 +150,7 @@ it('should not warn if all the requests are being mocked', async () => {
 })
 
 it('should warn about not fetched requests when --debugRequests param is used', async () => {
-  const consoleWarn = jest.spyOn(console, 'warn').mockImplementation()
+  const consoleWarn = vi.spyOn(console, 'warn').mockImplementation()
   process.env.npm_config_debugRequests = 'true'
 
   wrap(GreetingComponent)

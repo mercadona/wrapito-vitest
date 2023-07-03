@@ -1,10 +1,11 @@
 import { render, screen, fireEvent } from '@testing-library/react'
+import { vi } from 'vitest'
 import { wrap, configure } from '../src/index'
 
 import { MyComponentWithLogin, MyComponent } from './components.mock'
 
 it('should extend wrapito', async () => {
-  const otherCustomExtension = jest.fn()
+  const otherCustomExtension = vi.fn()
   const customArgs = { foo: 'bar' }
   configure({
     mount: render,

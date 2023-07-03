@@ -25,7 +25,9 @@ function resetMocksConfig() {
   removePortals(portalRootId)
 }
 
-afterEach(resetMocksConfig)
+afterEach(() => {
+    resetMocksConfig()
+})
 
 it('should have props', () => {
   configure({ mount: render })
