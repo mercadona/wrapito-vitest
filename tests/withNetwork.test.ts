@@ -1,7 +1,7 @@
 import React from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
 import { wrap, configure } from '../src/index'
-import { vi } from 'vitest'
+import { vi, it, expect } from 'vitest'
 
 import {
   MyComponentWithNetwork,
@@ -101,7 +101,7 @@ it('should match a request regardless the body order', async () => {
       {
         path: '/path/to/login/',
         host: 'my-host',
-        method: 'post',
+        method: 'POST',
         requestBody: {
           foo: 'foo',
           bar: 'bar',
@@ -124,7 +124,7 @@ it('should mock multiple POST responses', async () => {
     .withNetwork({
       host: 'my-host',
       path: '/path/to/save/',
-      method: 'post',
+      method: 'POST',
       multipleResponses: [
         { responseBody: { name: 'Fran Perea' } },
         { responseBody: { name: 'El que lo lea' } },
@@ -194,11 +194,11 @@ it('should handle fetch deafult requests when a string is passed', async () => {
   const MyComponent = () => null
   configure({ mount: render })
 
-  wrap(MyComponent).withNetwork([
-    { path: '/foo/bar', responseBody: { foo: 'bar'} }
-  ]).mount()
+  wrap(MyComponent)
+    .withNetwork([{ path: '/foo/bar', responseBody: { foo: 'bar' } }])
+    .mount()
 
-  const response = await fetch('/foo/bar').then((response) => response.json())
+  const response = await fetch('/foo/bar').then(response => response.json())
 
   expect(response).toEqual({ foo: 'bar' })
 })
@@ -207,11 +207,15 @@ it('should handle fetch requests with option when a string is passed', async () 
   const MyComponent = () => null
   configure({ mount: render })
 
-  wrap(MyComponent).withNetwork([
-    { path: '/foo/bar', method: 'POST', responseBody: { foo: 'bar'} }
-  ]).mount()
+  wrap(MyComponent)
+    .withNetwork([
+      { path: '/foo/bar', method: 'POST', responseBody: { foo: 'bar' } },
+    ])
+    .mount()
 
-  const response = await fetch('/foo/bar', { method: 'POST' }).then((response) => response.json())
+  const response = await fetch('/foo/bar', { method: 'POST' }).then(response =>
+    response.json(),
+  )
 
   expect(response).toEqual({ foo: 'bar' })
 })

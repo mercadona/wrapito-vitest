@@ -1,8 +1,8 @@
 import { render, screen, fireEvent } from '@testing-library/react'
-import { vi } from 'vitest'
+import { vi, it, expect } from 'vitest'
 import { wrap, configure } from '../src/index'
 
-import { MyComponentWithLogin, MyComponent } from './components.mock'
+import { MyComponentWithLogin } from './components.mock'
 
 it('should extend wrapito', async () => {
   const otherCustomExtension = vi.fn()
@@ -10,12 +10,12 @@ it('should extend wrapito', async () => {
   configure({
     mount: render,
     extend: {
-      withLogin: ({ addResponses }, username) =>
+      withLogin: ({ addResponses }, username: string) =>
         addResponses([
           {
             path: '/path/to/login/',
             host: 'my-host',
-            method: 'post',
+            method: 'POST',
             responseBody: username,
           },
         ]),
@@ -40,7 +40,7 @@ it('should be compatible with withNetwork', async () => {
           {
             path: '/path/to/login/',
             host: 'my-host',
-            method: 'post',
+            method: 'POST',
             responseBody: username,
           },
         ]),
@@ -52,7 +52,7 @@ it('should be compatible with withNetwork', async () => {
       {
         path: '/path/to/logout/',
         host: 'my-host',
-        method: 'post',
+        method: 'POST',
         responseBody: 'John Doe',
       },
     ])
@@ -73,7 +73,7 @@ it('should be composable', async () => {
           {
             path: '/path/to/login/',
             host: 'my-host',
-            method: 'post',
+            method: 'POST',
             responseBody: username,
           },
         ]),
@@ -84,7 +84,7 @@ it('should be composable', async () => {
       {
         path: '/path/to/logout/',
         host: 'my-host',
-        method: 'post',
+        method: 'POST',
         responseBody: 'John Doe',
       },
     ])
@@ -96,5 +96,3 @@ it('should be composable', async () => {
 
   expect(await screen.findByText('Logged out as John Doe')).toBeInTheDocument()
 })
-
-

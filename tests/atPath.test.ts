@@ -1,6 +1,6 @@
 import { wrap, configure } from '../src'
 import { render, fireEvent, screen } from '@testing-library/react'
-import { vi } from 'vitest'
+import { vi, expect } from 'vitest'
 
 import {
   MyAppWithRouting,

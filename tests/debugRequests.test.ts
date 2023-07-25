@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react'
 import { render, cleanup, screen, fireEvent } from '@testing-library/react'
 import { wrap, configure } from '../src/index'
 import { MyComponentWithFeedback, GreetingComponent } from './components.mock'
-import { vi } from 'vitest'
+import { vi, afterEach, expect, it, describe } from 'vitest'
 
 configure({ defaultHost: 'my-host', mount: render })
 
@@ -13,13 +12,13 @@ afterEach(() => {
 })
 
 it('should warn about the code making a request that has not being mocked', async () => {
-  const consoleWarn = vi.spyOn(console, 'warn').mockImplementation()
+  const consoleWarn = vi.spyOn(console, 'warn')
 
   wrap(GreetingComponent)
     .withNetwork({
       path: '/request2',
       host: 'my-host',
-      method: 'post',
+      method: 'POST',
       requestBody: { id: 2 },
       responseBody: { name: 'Sam' },
     })
@@ -43,13 +42,13 @@ it('should warn about the code making a request that has not being mocked', asyn
 })
 
 it('should warn about the code making a request that has not being mocked enough times', async () => {
-  const consoleWarn = vi.spyOn(console, 'warn').mockImplementation()
+  const consoleWarn = vi.spyOn(console, 'warn')
   configure({ mount: render })
   wrap(MyComponentWithFeedback)
     .withNetwork({
       host: 'my-host',
       path: '/path/to/save/',
-      method: 'post',
+      method: 'POST',
       multipleResponses: [{ responseBody: { name: 'Sam' } }],
     })
     .debugRequests()
@@ -62,14 +61,14 @@ it('should warn about the code making a request that has not being mocked enough
 
   expect(consoleWarn).toHaveBeenCalledWith(
     expect.stringContaining(
-      '🌯 Wrapito:  Missing response in the multipleResponses array for path /path/to/save/ and method post.',
+      '🌯 Wrapito:  Missing response in the multipleResponses array for path /path/to/save/ and method POST.',
     ),
   )
 })
 
 describe('when no using withNetwork builder', () => {
   it('should warn about all the request being done by the production code', async () => {
-    const consoleWarn = vi.spyOn(console, 'warn').mockImplementation()
+    const consoleWarn = vi.spyOn(console, 'warn')
 
     wrap(GreetingComponent).debugRequests().mount()
 
@@ -100,13 +99,13 @@ describe('when no using withNetwork builder', () => {
 })
 
 it('should not warn if the debugRequests feature is not used', async () => {
-  const consoleWarn = vi.spyOn(console, 'warn').mockImplementation()
+  const consoleWarn = vi.spyOn(console, 'warn')
 
   wrap(GreetingComponent)
     .withNetwork({
       path: '/request2',
       host: 'my-host',
-      method: 'post',
+      method: 'POST',
       requestBody: { id: 2 },
       responseBody: { name: 'Sam' },
     })
@@ -120,21 +119,21 @@ it('should not warn if the debugRequests feature is not used', async () => {
 })
 
 it('should not warn if all the requests are being mocked', async () => {
-  const consoleWarn = vi.spyOn(console, 'warn').mockImplementation()
+  const consoleWarn = vi.spyOn(console, 'warn')
 
   wrap(GreetingComponent)
     .withNetwork([
       {
         path: '/request1',
         host: 'my-host',
-        method: 'post',
+        method: 'POST',
         requestBody: { id: 1 },
         responseBody: { name: 'Joe' },
       },
       {
         path: '/request2',
         host: 'my-host',
-        method: 'post',
+        method: 'POST',
         requestBody: { id: 2 },
         responseBody: { name: 'Sam' },
       },
@@ -150,14 +149,14 @@ it('should not warn if all the requests are being mocked', async () => {
 })
 
 it('should warn about not fetched requests when --debugRequests param is used', async () => {
-  const consoleWarn = vi.spyOn(console, 'warn').mockImplementation()
+  const consoleWarn = vi.spyOn(console, 'warn')
   process.env.npm_config_debugRequests = 'true'
 
   wrap(GreetingComponent)
     .withNetwork({
       path: '/request2',
       host: 'my-host',
-      method: 'post',
+      method: 'POST',
       requestBody: { id: 2 },
       responseBody: { name: 'Sam' },
     })
