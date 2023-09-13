@@ -1,4 +1,4 @@
-import { wrap, configure } from '../src'
+import { wrap, configure } from '../../src'
 import { render, fireEvent, screen } from '@testing-library/react'
 import { vi, expect } from 'vitest'
 
@@ -7,7 +7,7 @@ import {
   MyComponent,
   history,
   myFakeModule,
-} from './components.mock'
+} from '../components.mock'
 
 configure({ mount: render })
 

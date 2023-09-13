@@ -1,6 +1,6 @@
 import { render, cleanup, screen, fireEvent } from '@testing-library/react'
-import { wrap, configure } from '../src/index'
-import { MyComponentWithFeedback, GreetingComponent } from './components.mock'
+import { wrap, configure } from '../../src/index'
+import { MyComponentWithFeedback, GreetingComponent } from '../components.mock'
 import { vi, afterEach, expect, it, describe } from 'vitest'
 
 configure({ defaultHost: 'my-host', mount: render })

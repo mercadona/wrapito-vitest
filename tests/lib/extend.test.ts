@@ -1,8 +1,8 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import { vi, it, expect } from 'vitest'
-import { wrap, configure } from '../src/index'
+import { wrap, configure } from '../../src/index'
 
-import { MyComponentWithLogin } from './components.mock'
+import { MyComponentWithLogin } from '../components.mock'
 
 it('should extend wrapito', async () => {
   const otherCustomExtension = vi.fn()

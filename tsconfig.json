@@ -1,6 +1,4 @@
 {
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "tests"],
   "compilerOptions": {
     "target": "es2020",
     "module": "es2020",
@@ -8,8 +6,6 @@
     "allowJs": true,
     "jsx": "react-jsx",
     "declaration": true,
-    "declarationDir": "./types",
-    "declarationMap": true,
     "sourceMap": true,
     "outDir": "./dist",
     "strict": true,
@@ -17,5 +13,7 @@
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
     "types": ["vitest/globals"]
-  }
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "tests"]
 }

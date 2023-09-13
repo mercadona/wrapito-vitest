@@ -29,7 +29,7 @@ const createDefaultResponse = async () => {
   return Promise.resolve(response)
 }
 
-const createResponse = async (mockResponse: Response) => {
+const createResponse = async (mockResponse: Partial<Response>) => {
   const { responseBody, status = 200, headers = {}, delay } = mockResponse
   const response = {
     json: () => Promise.resolve(responseBody),
@@ -79,7 +79,7 @@ const mockFetch = async (
   }
 
   const responseNotYetReturned = multipleResponses.find(
-    (response: Response) => !response.hasBeenReturned,
+    response => !response.hasBeenReturned,
   )
 
   if (!responseNotYetReturned) {

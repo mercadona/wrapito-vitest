@@ -1,15 +1,16 @@
 import { render, cleanup } from '@testing-library/react'
-import { wrap, configure } from '../src/index'
-import { getConfig } from '../src/config'
+import { wrap, configure } from '../../src/index'
+import { getConfig } from '../../src/config'
 import {
   MyComponent,
   MyComponentWithProps,
   MyComponentWithPortal,
-} from './components.mock'
+} from '../components.mock'
+import { it, expect, afterEach } from 'vitest'
 
 const portalRootId = 'portal-root-id'
 
-const removePortals = portalRootId => {
+const removePortals = (portalRootId: string) => {
   const portal = document.getElementById(portalRootId)
   if (!portal) {
     return
@@ -26,7 +27,7 @@ function resetMocksConfig() {
 }
 
 afterEach(() => {
-    resetMocksConfig()
+  resetMocksConfig()
 })
 
 it('should have props', () => {
@@ -56,7 +57,7 @@ it('should have unique portals', () => {
   wrap(MyComponentWithPortal).withProps(props).mount()
   wrap(MyComponentWithPortal).withProps(props).mount()
 
-  expect(document.querySelectorAll(`#${ portalRootId }`)).toHaveLength(1)
+  expect(document.querySelectorAll(`#${portalRootId}`)).toHaveLength(1)
 })
 
 it('should use the default mount', () => {

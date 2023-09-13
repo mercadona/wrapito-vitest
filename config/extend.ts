@@ -1,4 +1,4 @@
 import { expect } from 'vitest'
-import { assertions } from '../src'
+import { matchers } from '../src'
 
-expect.extend(assertions)
+expect.extend(matchers)

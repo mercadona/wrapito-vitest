@@ -1,4 +1,3 @@
-import { Assertion, AsymmetricMatchersContaining } from 'vitest'
 import type { RequestOptions } from './src/models'
 
 interface CustomMatchers<R = unknown> {

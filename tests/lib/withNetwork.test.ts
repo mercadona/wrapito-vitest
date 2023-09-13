@@ -1,6 +1,6 @@
 import React from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
-import { wrap, configure } from '../src/index'
+import { wrap, configure } from '../../src/index'
 import { vi, it, expect } from 'vitest'
 
 import {
@@ -8,7 +8,7 @@ import {
   MyComponentWithPost,
   MyComponentWithFeedback,
   MyComponentMakingHttpCallsWithQueryParams,
-} from './components.mock'
+} from '../components.mock'
 
 it('should have network by default', async () => {
   configure({ mount: render })
