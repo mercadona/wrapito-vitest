@@ -17,6 +17,7 @@
     "build": "npm run clean && NODE_ENV=production tsc",
     "build:types": "tsc --build",
     "clean": "rimraf dist",
+    "postbuild": "node scripts/copy-publish-files.cjs",
     "publish-package": "npm run clean && npm run build && npm run postbuild && cd dist && npm publish",
     "typecheck": "tsc --noEmit types/index.d.ts"
   },
