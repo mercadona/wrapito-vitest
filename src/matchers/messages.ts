@@ -1,6 +1,9 @@
-import { green, red } from 'chalk'
+import * as chalk from 'chalk'
+import { RequestOptions } from '../models'
 
-const emptyErrorMessage = (path, options) => {
+type Body = string | object | undefined
+
+const emptyErrorMessage = (path: string, options?: RequestOptions) => {
   const message = options?.host
     ? `🌯 Wrapito: ${options?.host}${path} ain't got called`
     : `🌯 Wrapito: ${path} ain't got called`
@@ -11,27 +14,34 @@ const emptyErrorMessage = (path, options) => {
   }
 }
 
-const fetchLengthErrorMessage = (path, expectLength, currentLength) => ({
+const fetchLengthErrorMessage = (
+  path: string,
+  expectLength: number,
+  currentLength: number,
+) => ({
   pass: false,
   message: () =>
     `🌯 Wrapito: ${path} is called ${currentLength} times, you expected ${expectLength} times`,
 })
 
-const methodDoesNotMatchErrorMessage = (expected, received) => ({
+const methodDoesNotMatchErrorMessage = (
+  expected: string | undefined,
+  received: string | Array<string>,
+) => ({
   pass: false,
   message: () =>
     `🌯 Wrapito: Fetch method does not match, expected ${expected} received ${received}`,
 })
 
-const bodyDoesNotMatchErrorMessage = (expected, received) => ({
+const bodyDoesNotMatchErrorMessage = (expected: Body, received: Body) => ({
   pass: false,
   message: () =>
     `🌯 Wrapito: Fetch body does not match.
 Expected:
-${green(JSON.stringify(expected, null, ' '))}
+${chalk.default.green(JSON.stringify(expected, null, ' '))}
 
 Received:
-${red(JSON.stringify(received, null, ' '))}`,
+${chalk.default.red(JSON.stringify(received, null, ' '))}`,
 })
 
 const doesNotHaveBodyErrorMessage = () => ({
@@ -41,10 +51,13 @@ const doesNotHaveBodyErrorMessage = () => ({
 
 const successMessage = () => ({
   pass: true,
-  message: () => undefined,
+  message: () => 'Test passing',
 })
 
-const haveBeenFetchedSuccessMessage = (path, options) => {
+const haveBeenFetchedSuccessMessage = (
+  path: string,
+  options: { host?: string },
+) => {
   const message = options?.host
     ? `🌯 Wrapito: ${options.host}${path} is called`
     : `🌯 Wrapito: ${path} is called`

@@ -1,15 +1,17 @@
 import chalk from 'chalk'
-import { Response, WrapRequest } from './models'
+import type { Response, WrapRequest } from './models'
 import { getRequestMatcher } from './requestMatcher'
+import { vi } from 'vitest'
+import type { Mock } from 'vitest'
 
 declare global {
   interface Window {
-    fetch: jest.Mock
+    fetch: Mock
   }
 }
 
 beforeEach(() => {
-  global.window.fetch = jest.fn()
+  global.window.fetch = vi.fn()
 })
 
 afterEach(() => {
@@ -27,8 +29,8 @@ const createDefaultResponse = async () => {
   return Promise.resolve(response)
 }
 
-const createResponse = async (mockResponse: Response) => {
-  const { responseBody, status = 200, headers, delay } = mockResponse
+const createResponse = async (mockResponse: Partial<Response>) => {
+  const { responseBody, status = 200, headers = {}, delay } = mockResponse
   const response = {
     json: () => Promise.resolve(responseBody),
     status,
@@ -51,7 +53,7 @@ ${chalk.white.bold.bgRed('wrapito')} ${chalk.redBright.bold(
     'cannot find any mock matching:',
   )}
   ${chalk.greenBright(`URL: ${request.url}`)}
-  ${chalk.greenBright(`METHOD: ${request.method.toLowerCase()}`)}
+  ${chalk.greenBright(`METHOD: ${request.method?.toLowerCase()}`)}
   ${chalk.greenBright(`REQUEST BODY: ${request._bodyInit}`)}
  `)
 }
@@ -77,7 +79,7 @@ const mockFetch = async (
   }
 
   const responseNotYetReturned = multipleResponses.find(
-    (response: Response) => !response.hasBeenReturned,
+    response => !response.hasBeenReturned,
   )
 
   if (!responseNotYetReturned) {

@@ -3,26 +3,29 @@ import React from 'react'
 import { mockNetwork } from './mockNetwork'
 import { getConfig } from './config'
 import { updateOptions, getOptions } from './options'
-import {
+import type {
   Response,
   Wrap,
   WrapExtensionAPI,
   Extension,
   Extensions,
+  RenderResult,
 } from './models'
+import { vi } from 'vitest'
+import type { MockedFunction } from 'vitest'
 
 beforeEach(() => {
-  global.fetch = jest.fn()
+  global.fetch = vi.fn()
 })
 
 afterEach(() => {
-  const mockedFetch = global.fetch as jest.MockedFunction<typeof fetch>
+  const mockedFetch = global.fetch as MockedFunction<typeof fetch>
   mockedFetch.mockRestore()
 })
 
-const wrap = (Component: typeof React.Component): Wrap => {
+const wrap = (component: typeof React.Component): Wrap => {
   updateOptions({
-    Component: Component,
+    Component: component,
     responses: [],
     props: {},
     path: '',
@@ -86,7 +89,7 @@ const withProps = (props: object) => {
   return wrapWith()
 }
 
-const withNetwork = (responses: Response[] = []) => {
+const withNetwork = (responses: Response | Response[] = []) => {
   const options = getOptions()
   const listOfResponses = Array.isArray(responses) ? responses : [responses]
 
@@ -98,7 +101,7 @@ const withNetwork = (responses: Response[] = []) => {
   return wrapWith()
 }
 
-const atPath = (path: string, historyState: object) => {
+const atPath = (path: string, historyState?: object) => {
   const options = getOptions()
   updateOptions({ ...options, historyState, path, hasPath: true })
   return wrapWith()
@@ -110,9 +113,10 @@ const debugRequests = () => {
   return wrapWith()
 }
 
-const getMount = () => {
+const getMount = (): RenderResult => {
   const { portal, changeRoute, history, mount } = getConfig()
-  const { Component, props, responses, path, hasPath, debug, historyState } = getOptions()
+  const { Component, props, responses, path, hasPath, debug, historyState } =
+    getOptions()
 
   if (portal) {
     setupPortal(portal)

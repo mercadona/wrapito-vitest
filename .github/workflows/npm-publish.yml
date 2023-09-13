@@ -1,6 +1,6 @@
 # This workflow will run tests using node and then publish a package to NPM when a tag is pushed
 
-name: Publish wrapito to npm
+name: Publish wrapito-vitest to npm
 on:
   push:
     tags:
@@ -9,10 +9,10 @@ jobs:
   publish-npm:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
-          node-version: 10
+          node-version: 18
           registry-url: https://registry.npmjs.org/
       - run: npm ci
       - run: npm run test
@@ -36,4 +36,3 @@ jobs:
           body: ${{steps.github_release.outputs.changelog}}
           draft: false
           prerelease: false
-
