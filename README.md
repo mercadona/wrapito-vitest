@@ -1,6 +1,10 @@
-# 🌯 wrapito
+# 🌯 wrapito-vitest
 
 Wrap you tests so that you can test both behaviour and components with less effort.
+
+## IMPORTANT
+
+This version is only compatible with [vitest](https://vitest.dev/).
 
 ## 🎯 Motivation
 

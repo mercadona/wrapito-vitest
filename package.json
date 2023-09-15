@@ -23,7 +23,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mercadona/wrapito.git"
+    "url": "git+https://github.com/mercadona/wrapito-vitest.git"
   },
   "keywords": [
     "react",
@@ -42,9 +42,9 @@
     "http"
   ],
   "bugs": {
-    "url": "https://github.com/mercadona/wrapito/issues"
+    "url": "https://github.com/mercadona/wrapito-vitest/issues"
   },
-  "homepage": "https://github.com/mercadona/wrapito#readme",
+  "homepage": "https://github.com/mercadona/wrapito-vitest#readme",
   "dependencies": {
     "deep-equal": "^1.0.1",
     "object-hash": "^2.1.1",
