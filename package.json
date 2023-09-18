@@ -3,8 +3,7 @@
   "version": "0.0.0",
   "description": "🌯 🌯 Wrap you tests so that you can test both behaviour and components with less effort.",
   "type": "module",
-  "types": "types/index.d.ts",
-  "main": "dist/index.js",
+  "exports": "./index.js",
   "license": "MIT",
   "scripts": {
     "test": "vitest",
@@ -29,12 +28,12 @@
     "javascript",
     "dom",
     "js",
-    "jest",
     "wrap",
     "component",
     "mock",
     "fetch",
-    "http"
+    "http",
+    "vitest"
   ],
   "bugs": {
     "url": "https://github.com/mercadona/wrapito-vitest/issues"
