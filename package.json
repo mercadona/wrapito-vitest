@@ -5,11 +5,6 @@
   "type": "module",
   "types": "types/index.d.ts",
   "main": "dist/index.js",
-  "files": [
-    "dist",
-    "types/index.d.ts",
-    "all.js"
-  ],
   "license": "MIT",
   "scripts": {
     "test": "vitest",
@@ -18,7 +13,7 @@
     "build:types": "tsc --build",
     "clean": "rimraf dist",
     "postbuild": "node scripts/copy-publish-files.cjs",
-    "publish-package": "npm run clean && npm run build && npm run postbuild && cd dist && npm publish",
+    "publish-package": "npm run build && cd dist && npm publish",
     "typecheck": "tsc --noEmit types/index.d.ts"
   },
   "repository": {
