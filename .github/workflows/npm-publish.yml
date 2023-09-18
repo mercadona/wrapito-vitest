@@ -3,7 +3,6 @@
 name: Publish wrapito-vitest to npm
 on:
   push:
-    branches: [ master ]
     tags:
       - 'v*.*.*'
 jobs:
