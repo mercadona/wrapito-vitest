@@ -4,7 +4,7 @@
     "module": "es2020",
     "allowSyntheticDefaultImports": true,
     "allowJs": true,
-    "jsx": "react-jsx",
+    "jsx": "react",
     "declaration": true,
     "sourceMap": true,
     "outDir": "./dist",
@@ -12,7 +12,8 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
-    "types": ["vitest/globals"]
+    "types": ["vitest/globals"],
+    "esModuleInterop": true
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "tests"]
