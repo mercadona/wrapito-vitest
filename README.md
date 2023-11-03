@@ -284,3 +284,14 @@ In order to test the library in a project without releasing the library:
 - `npm run build`
 - This will generate a local build in the `dist` folder
 - Copy the content of that folder in `node_modules/wrapito` in your project
+
+## Deploy new version in npm
+
+You need to create a new tag for the project. E.g:
+
+```
+git tag v1.0.5
+git push origin v1.0.5
+```
+
+This will run a workflow in github that will publish this version for you.
