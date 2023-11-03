@@ -6,7 +6,7 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: [
       './config/setup.js',
-      '/config/extend.ts',
+      './config/extend.ts',
       './config/polyfills.js',
     ],
     coverage: {
