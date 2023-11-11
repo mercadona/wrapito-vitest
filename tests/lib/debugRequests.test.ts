@@ -1,15 +1,30 @@
 import { render, cleanup, screen, fireEvent } from '@testing-library/react'
 import { wrap, configure } from '../../src/index'
 import { MyComponentWithFeedback, GreetingComponent } from '../components.mock'
-import { vi, afterEach, expect, it, describe } from 'vitest'
+import {
+  vi,
+  afterEach,
+  beforeAll,
+  expect,
+  it,
+  describe,
+  afterAll,
+} from 'vitest'
 
-configure({ defaultHost: 'my-host', mount: render })
+const originalWarn = window.console.warn
+
+beforeAll(() => (window.console.warn = vi.fn()))
 
 afterEach(() => {
   cleanup()
   process.env.npm_config_debugRequests = undefined
-  console.warn.mockRestore()
 })
+
+afterAll(() => {
+  window.console.warn = originalWarn
+})
+
+configure({ defaultHost: 'my-host', mount: render })
 
 it('should warn about the code making a request that has not being mocked', async () => {
   const consoleWarn = vi.spyOn(console, 'warn')

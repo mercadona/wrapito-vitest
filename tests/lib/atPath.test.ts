@@ -1,6 +1,6 @@
 import { wrap, configure } from '../../src'
 import { render, fireEvent, screen } from '@testing-library/react'
-import { vi, expect } from 'vitest'
+import { vi, expect, beforeAll, afterAll, it } from 'vitest'
 
 import {
   MyAppWithRouting,
@@ -8,6 +8,14 @@ import {
   history,
   myFakeModule,
 } from '../components.mock'
+
+const originalWarn = window.console.warn
+
+beforeAll(() => (window.console.warn = vi.fn()))
+
+afterAll(() => {
+  window.console.warn = originalWarn
+})
 
 configure({ mount: render })
 
