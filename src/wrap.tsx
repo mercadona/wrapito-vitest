@@ -9,7 +9,6 @@ import type {
   WrapExtensionAPI,
   Extension,
   Extensions,
-  RenderResult,
 } from './models'
 import { vi } from 'vitest'
 import type { MockedFunction } from 'vitest'
@@ -23,7 +22,7 @@ afterEach(() => {
   mockedFetch.mockRestore()
 })
 
-const wrap = (component: typeof React.Component): Wrap => {
+const wrap = (component: unknown): Wrap => {
   updateOptions({
     Component: component,
     responses: [],
@@ -113,10 +112,12 @@ const debugRequests = () => {
   return wrapWith()
 }
 
-const getMount = (): RenderResult => {
+const getMount = () => {
   const { portal, changeRoute, history, mount } = getConfig()
   const { Component, props, responses, path, hasPath, debug, historyState } =
     getOptions()
+
+  const C = Component as React.JSXElementConstructor<unknown>
 
   if (portal) {
     setupPortal(portal)
@@ -138,7 +139,7 @@ const getMount = (): RenderResult => {
 
   mockNetwork(responses, debug)
 
-  return mount(<Component {...props} />)
+  return mount(<C {...props} />)
 }
 
 const setupPortal = (portalRootId: string) => {
