@@ -23,7 +23,7 @@ afterEach(() => {
   mockedFetch.mockRestore()
 })
 
-const wrap = (component: typeof React.Component): Wrap => {
+const wrap = (component: unknown): Wrap => {
   updateOptions({
     Component: component,
     responses: [],

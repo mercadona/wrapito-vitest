@@ -43,7 +43,7 @@ export interface Wrap {
 }
 
 export interface WrapOptions {
-  Component: typeof React.Component
+  Component: unknown
   responses: WrapResponse[]
   props: object
   path: string
