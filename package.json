@@ -55,7 +55,7 @@
     "@types/object-hash": "^3.0.6",
     "@types/react": "^17.0.73",
     "@types/react-dom": "^17.0.25",
-    "@vitest/coverage-istanbul": "^0.32.4",
+    "@vitest/coverage-istanbul": "^1.1.0",
     "eslint": "^8.56.0",
     "eslint-config-prettier": "^8.10.0",
     "eslint-config-react-app": "^7.0.1",
