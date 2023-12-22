@@ -347,3 +347,35 @@ export const GreetingComponent = () => {
 
   return <div>Hi {name}!</div>
 }
+
+export const MyComponentWithFeatureFlags = () => {
+  const [flags, setFlags] = useState([])
+
+  useEffect(() => {
+    const retrieveFeatureFlags = async () => {
+      try {
+        const request = new Request('my-host/feature-flags')
+        const response = await fetch(request)
+        if (!response) return
+        const { flags } = await response.json()
+
+        setFlags(flags)
+      } catch (e) {
+        setFlags([])
+      }
+    }
+
+    retrieveFeatureFlags()
+  }, [])
+
+  return (
+    <>
+      <h1>Feature flags test</h1>
+      {flags.includes('my-flag') && (
+        <div>
+          <span>Feature Flag enabled</span>
+        </div>
+      )}
+    </>
+  )
+}
