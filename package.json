@@ -9,12 +9,12 @@
   "scripts": {
     "test": "vitest",
     "test:coverage": "vitest --coverage",
+    "build:watch": "tsup --watch",
     "build": "tsup",
     "build:types": "tsc --build",
-    "clean": "rimraf dist",
     "postbuild": "node scripts/copy-publish-files.cjs",
     "publish-package": "npm run build && cd dist && npm publish",
-    "typecheck": "tsc --noEmit types/index.d.ts"
+    "typecheck": "tsc --noEmit dist/index.d.ts"
   },
   "repository": {
     "type": "git",
