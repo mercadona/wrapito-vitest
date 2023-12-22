@@ -26,4 +26,4 @@ function configure(newConfig: Partial<Config>) {
 
 const getConfig = (): Config => ({ ...config })
 
-export { configure, getConfig, Config, mount }
+export { configure, getConfig, mount }
