@@ -3,10 +3,8 @@
   "version": "8.0.0",
   "description": "🌯 🌯 Wrap you tests so that you can test both behaviour and components with less effort.",
   "type": "module",
-  "exports": [
-    "./index.js",
-    "./index.d.ts"
-  ],
+  "exports": "./index.js",
+  "types": "./index.d.ts",
   "license": "MIT",
   "scripts": {
     "test": "vitest",
