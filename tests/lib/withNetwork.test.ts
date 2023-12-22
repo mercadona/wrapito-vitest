@@ -265,3 +265,35 @@ it('should be able to override global fetch mocks', async () => {
   expect(await screen.findByText(/feature flags test/i)).toBeVisible()
   expect(screen.queryByText(/feature flag enabled/i)).not.toBeInTheDocument()
 })
+
+it('should work with extensions', async () => {
+  configure({
+    mount: render,
+    defaultResponses: [
+      {
+        path: 'my-host/feature-flags',
+        responseBody: {
+          flags: ['my-flag'],
+        },
+      },
+    ],
+    extend: {
+      withCustomFlags: ({ addResponses }, [otherResponses = []]) => {
+        addResponses([
+          {
+            path: 'my-host/feature-flags',
+            responseBody: {
+              flags: ['another-flag'],
+            },
+          },
+          ...otherResponses,
+        ])
+      },
+    },
+  })
+
+  wrap(MyComponentWithFeatureFlags).withCustomFlags().mount()
+
+  expect(await screen.findByText(/feature flags test/i)).toBeVisible()
+  expect(screen.queryByText(/feature flag enabled/i)).not.toBeInTheDocument()
+})
