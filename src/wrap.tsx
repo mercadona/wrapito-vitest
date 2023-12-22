@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react'
 
 import { mockNetwork } from './mockNetwork'
 import { getConfig } from './config'
