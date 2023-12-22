@@ -1,4 +1,3 @@
-import React from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
 import { wrap, configure } from '../../src/index'
 import { vi, it, expect } from 'vitest'
@@ -8,6 +7,7 @@ import {
   MyComponentWithPost,
   MyComponentWithFeedback,
   MyComponentMakingHttpCallsWithQueryParams,
+  MyComponentWithFeatureFlags,
 } from '../components.mock'
 
 it('should have network by default', async () => {
@@ -218,4 +218,50 @@ it('should handle fetch requests with option when a string is passed', async () 
   )
 
   expect(response).toEqual({ foo: 'bar' })
+})
+
+it('should be able to define global fetch mocks', async () => {
+  configure({
+    mount: render,
+    defaultResponses: [
+      {
+        path: 'my-host/feature-flags',
+        responseBody: {
+          flags: ['my-flag'],
+        },
+      },
+    ],
+  })
+
+  wrap(MyComponentWithFeatureFlags).mount()
+
+  expect(await screen.findByText(/feature flag enabled/i)).toBeVisible()
+})
+
+it('should be able to override global fetch mocks', async () => {
+  configure({
+    mount: render,
+    defaultResponses: [
+      {
+        path: 'my-host/feature-flags',
+        responseBody: {
+          flags: ['my-flag'],
+        },
+      },
+    ],
+  })
+
+  wrap(MyComponentWithFeatureFlags)
+    .withNetwork([
+      {
+        path: 'my-host/feature-flags',
+        responseBody: {
+          flags: ['another-flag'],
+        },
+      },
+    ])
+    .mount()
+
+  expect(await screen.findByText(/feature flags test/i)).toBeVisible()
+  expect(screen.queryByText(/feature flag enabled/i)).not.toBeInTheDocument()
 })
