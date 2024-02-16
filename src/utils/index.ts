@@ -14,7 +14,6 @@ const getDefaultHost = () => {
 const getPath = (host = '', expectedPath: string, defaultHost: string) =>
   expectedPath.includes(defaultHost) ? expectedPath : host + expectedPath
 
-// Type Predicate
 const isRequest = (maybeRequest: unknown): maybeRequest is Request =>
   maybeRequest instanceof Request
 
