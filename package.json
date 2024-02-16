@@ -54,7 +54,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@types/deep-equal": "^1.0.4",
-    "@types/history": "^4.7.11",
+    "@types/history": "^5.0.0",
     "@types/node": "^20.10.5",
     "@types/object-hash": "^3.0.6",
     "@types/react": "^17.0.73",
