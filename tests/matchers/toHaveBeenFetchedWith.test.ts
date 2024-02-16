@@ -1,7 +1,7 @@
 import '../../vitest.d.ts'
 import { matchers } from '../../src/matchers'
-import * as chalk from 'chalk'
 import { describe, it, expect } from 'vitest'
+import { diff } from 'jest-diff'
 
 expect.extend(matchers)
 
@@ -157,11 +157,7 @@ describe('toHaveBeenFetchedWith', () => {
 
       expect(message()).toBe(
         `🌯 Wrapito: Fetch body does not match.
-Expected:
-${chalk.default.green(JSON.stringify(expectedBody, null, ' '))}
-
-Received:
-${chalk.default.red(JSON.stringify([receivedBody], null, ' '))}`,
+${diff(expectedBody, receivedBody)}`,
       )
       expect(path).not.toHaveBeenFetchedWith({
         body: expectedBody,
