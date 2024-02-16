@@ -3,17 +3,20 @@
   "version": "8.0.0",
   "description": "🌯 🌯 Wrap you tests so that you can test both behaviour and components with less effort.",
   "type": "module",
-  "exports": "./index.js",
-  "types": "./index.d.ts",
+  "exports": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "license": "MIT",
   "scripts": {
+    "build": "tsup",
+    "build:watch": "tsup --watch",
     "test": "vitest",
     "test:coverage": "vitest --coverage",
-    "build:watch": "tsup --watch",
-    "build": "tsup",
+    "test:publish": "npm publish --dry-run",
     "build:types": "tsc --build",
-    "postbuild": "node scripts/copy-publish-files.cjs",
-    "publish-package": "npm run build && cd dist && npm publish",
+    "publish-package": "npm run build && npm publish",
     "typecheck": "tsc --noEmit dist/index.d.ts"
   },
   "repository": {
