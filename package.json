@@ -3,8 +3,11 @@
   "version": "8.0.0",
   "description": "🌯 🌯 Wrap you tests so that you can test both behaviour and components with less effort.",
   "type": "module",
-  "exports": "./index.js",
-  "types": "./index.d.ts",
+  "exports": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
   "license": "MIT",
   "scripts": {
     "build": "tsup",
