@@ -7,13 +7,13 @@
   "types": "./index.d.ts",
   "license": "MIT",
   "scripts": {
+    "build": "tsup",
+    "build:watch": "tsup --watch",
     "test": "vitest",
     "test:coverage": "vitest --coverage",
-    "build:watch": "tsup --watch",
-    "build": "tsup",
+    "test:publish": "npm publish --dry-run",
     "build:types": "tsc --build",
-    "postbuild": "node scripts/copy-publish-files.cjs",
-    "publish-package": "npm run build && cd dist && npm publish",
+    "publish-package": "npm run build && npm publish",
     "typecheck": "tsc --noEmit dist/index.d.ts"
   },
   "repository": {
