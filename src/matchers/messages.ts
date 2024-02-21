@@ -1,5 +1,5 @@
-import * as chalk from 'chalk'
 import { RequestOptions } from '../models'
+import { diff } from 'jest-diff'
 
 type Body = string | object | undefined
 
@@ -30,19 +30,23 @@ const methodDoesNotMatchErrorMessage = (
 ) => ({
   pass: false,
   message: () =>
-    `🌯 Wrapito: Fetch method does not match, expected ${expected} received ${received}`,
+    `🌯 Wrapito: Fetch method does not match, expected ${expected} received ${
+      received ?? 'none'
+    }`,
 })
 
-const bodyDoesNotMatchErrorMessage = (expected: Body, received: Body) => ({
-  pass: false,
-  message: () =>
-    `🌯 Wrapito: Fetch body does not match.
-Expected:
-${chalk.default.green(JSON.stringify(expected, null, ' '))}
-
-Received:
-${chalk.default.red(JSON.stringify(received, null, ' '))}`,
-})
+const bodyDoesNotMatchErrorMessage = (
+  expected: Body,
+  received: Array<Body>,
+) => {
+  const [r] = received
+  return {
+    pass: false,
+    message: () =>
+      `🌯 Wrapito: Fetch body does not match.
+${diff(expected, r)}`,
+  }
+}
 
 const doesNotHaveBodyErrorMessage = () => ({
   pass: false,
