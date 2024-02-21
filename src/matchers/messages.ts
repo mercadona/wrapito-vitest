@@ -39,12 +39,13 @@ const bodyDoesNotMatchErrorMessage = (
   expected: Body,
   received: Array<Body>,
 ) => {
-  const [r] = received
+  const diffs = received.map(r => diff(expected, r)).join('\n\n')
+
   return {
     pass: false,
     message: () =>
       `🌯 Wrapito: Fetch body does not match.
-${diff(expected, r)}`,
+${diffs}`,
   }
 }
 
