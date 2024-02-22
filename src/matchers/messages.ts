@@ -37,9 +37,11 @@ const methodDoesNotMatchErrorMessage = (
 
 const bodyDoesNotMatchErrorMessage = (
   expected: Body,
-  received: Array<Body>,
+  receivedBodies: Array<Body>,
 ) => {
-  const diffs = received.map(r => diff(expected, r)).join('\n\n')
+  const diffs = receivedBodies
+    .map(received => diff(expected, received))
+    .join('\n\n')
 
   return {
     pass: false,
