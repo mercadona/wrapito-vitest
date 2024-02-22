@@ -37,14 +37,17 @@ const methodDoesNotMatchErrorMessage = (
 
 const bodyDoesNotMatchErrorMessage = (
   expected: Body,
-  received: Array<Body>,
+  receivedBodies: Array<Body>,
 ) => {
-  const [r] = received
+  const diffs = receivedBodies
+    .map(received => diff(expected, received))
+    .join('\n\n')
+
   return {
     pass: false,
     message: () =>
       `🌯 Wrapito: Fetch body does not match.
-${diff(expected, r)}`,
+${diffs}`,
   }
 }
 
