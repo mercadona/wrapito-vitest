@@ -52,7 +52,7 @@
     "whatwg-fetch": "^3.6.20"
   },
   "devDependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^12.1.5",
     "@types/deep-equal": "^1.0.4",
     "@types/history": "^4.7.11",
