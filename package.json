@@ -3,7 +3,14 @@
   "version": "8.0.0",
   "description": "🌯 🌯 Wrap you tests so that you can test both behaviour and components with less effort.",
   "type": "module",
-  "exports": "./dist/index.js",
+  "exports": {
+    ".": {
+     "import": "./dist/index.js"
+    },
+    "./integration": {
+     "import": "./dist/integration.js"
+    }
+  },
   "types": "./dist/index.d.ts",
   "files": [
     "dist"
