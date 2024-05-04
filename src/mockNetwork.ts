@@ -1,21 +1,20 @@
 import chalk from 'chalk'
 import type { Response, WrapRequest } from './models'
 import { getRequestMatcher } from './requestMatcher'
-import { vi } from 'vitest'
-import type { Mock } from 'vitest'
+import { SpyFn, spy } from 'tinyspy'
 
 declare global {
   interface Window {
-    fetch: Mock
+    fetch: SpyFn
   }
 }
 
 beforeEach(() => {
-  global.window.fetch = vi.fn()
+  global.window.fetch = spy()
 })
 
 afterEach(() => {
-  global.window.fetch.mockRestore()
+  global.window.fetch.reset()
 })
 
 const createDefaultResponse = async () => {
@@ -96,14 +95,14 @@ const mockFetch = async (
 const mockNetwork = (responses: Response[] = [], debug: boolean = false) => {
   const fetch = global.window.fetch
 
-  fetch.mockImplementation((input: WrapRequest, init?: RequestInit) => {
+  fetch.impl = (input: WrapRequest, init?: RequestInit) => {
     if (typeof input === 'string') {
       const request = new Request(input, init)
       return mockFetch(responses, request, debug)
     }
     const request = input
     return mockFetch(responses, request, debug)
-  })
+  }
 }
 
 const printMultipleResponsesWarning = (response: Response) => {

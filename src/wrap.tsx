@@ -10,16 +10,15 @@ import type {
   Extension,
   Extensions,
 } from './models'
-import { vi } from 'vitest'
-import type { MockedFunction } from 'vitest'
+import { SpyFn, spy } from 'tinyspy'
 
 beforeEach(() => {
-  global.fetch = vi.fn()
+  global.fetch = spy()
 })
 
 afterEach(() => {
-  const mockedFetch = global.fetch as MockedFunction<typeof fetch>
-  mockedFetch.mockRestore()
+  const mockedFetch = global.fetch as SpyFn
+  mockedFetch.reset()
 })
 
 const wrap = (component: unknown): Wrap => {
