@@ -2,7 +2,7 @@ import deepEqual from 'deep-equal'
 import { getConfig } from '../config'
 import { RequestOptions, WrapRequest } from '../models'
 
-import type { MockedFunction } from 'vitest'
+import { SpyFn } from 'tinyspy'
 
 const getDefaultHost = () => {
   const configuredHost = getConfig().defaultHost
@@ -23,8 +23,8 @@ export const findRequestsByPath = (
   expectedPath: string,
   options: RequestOptions = { method: 'GET' },
 ) => {
-  const typedFetch = fetch as MockedFunction<typeof fetch>
-  return typedFetch.mock.calls.filter(([call]) => {
+  const typedFetch = fetch as SpyFn
+  return typedFetch.calls.filter(([call]) => {
     const url = getUrl(call)
     const defaultHost = getDefaultHost()
     const callURL = new URL(url, defaultHost)
