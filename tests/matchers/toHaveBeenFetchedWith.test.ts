@@ -76,7 +76,7 @@ describe('toHaveBeenFetchedWith', () => {
       await fetch(request)
 
       //@ts-ignore
-      fetch.calls[0][0].json()
+      fetch.mock.calls[0][0].json()
 
       const { message } = matchers.toHaveBeenFetchedWith(path, {
         body: {

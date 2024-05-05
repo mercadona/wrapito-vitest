@@ -11,14 +11,16 @@ import type {
   Extensions,
 } from './models'
 import { SpyFn, spy } from 'tinyspy'
+import { enhancedSpy } from './utils'
+import { MockInstance } from 'vitest'
 
 beforeEach(() => {
-  global.fetch = spy()
+  global.fetch = enhancedSpy()
 })
 
 afterEach(() => {
-  const mockedFetch = global.fetch as SpyFn
-  mockedFetch.reset()
+  const mockedFetch = global.fetch as MockInstance
+  mockedFetch.mockReset()
 })
 
 const wrap = (component: unknown): Wrap => {
