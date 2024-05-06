@@ -11,6 +11,7 @@ declare global {
 }
 
 beforeEach(() => {
+  // @ts-expect-error
   global.window.fetch = enhancedSpy() as MockInstance
 })
 

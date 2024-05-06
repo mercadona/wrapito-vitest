@@ -10,15 +10,16 @@ import type {
   Extension,
   Extensions,
 } from './models'
-import { SpyFn, spy } from 'tinyspy'
 import { enhancedSpy } from './utils'
 import { MockInstance } from 'vitest'
 
 beforeEach(() => {
+  // @ts-expect-error
   global.fetch = enhancedSpy()
 })
 
 afterEach(() => {
+  // @ts-expect-error
   const mockedFetch = global.fetch as MockInstance
   mockedFetch.mockReset()
 })
