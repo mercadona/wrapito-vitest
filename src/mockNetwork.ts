@@ -1,18 +1,18 @@
 import chalk from 'chalk'
 import type { Response, WrapRequest } from './models'
 import { getRequestMatcher } from './requestMatcher'
-import { enhancedSpy } from './utils'
-import type { MockInstance } from 'vitest'
+import { enhancedSpy } from './utils/tinyspyWrapper'
+import type { MockInstance } from '../src/utils/types'
 
 declare global {
   interface Window {
-    fetch: MockInstance<any[], any>
+    fetch: MockInstance
   }
 }
 
 beforeEach(() => {
   // @ts-expect-error
-  global.window.fetch = enhancedSpy() as MockInstance
+  global.window.fetch = enhancedSpy()
 })
 
 afterEach(() => {

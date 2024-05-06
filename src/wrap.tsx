@@ -10,8 +10,8 @@ import type {
   Extension,
   Extensions,
 } from './models'
-import { enhancedSpy } from './utils'
-import { MockInstance } from 'vitest'
+import { enhancedSpy } from './utils/tinyspyWrapper'
+import { MockInstance } from './utils/types'
 
 beforeEach(() => {
   // @ts-expect-error
