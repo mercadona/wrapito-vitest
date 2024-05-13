@@ -4,12 +4,8 @@
   "description": "🌯 🌯 Wrap you tests so that you can test both behaviour and components with less effort.",
   "type": "module",
   "exports": {
-    ".": {
-     "import": "./dist/index.js"
-    },
-    "./integration": {
-     "import": "./dist/integration.js"
-    }
+    ".": "./dist/index.js",
+    "./integration": "./dist/integration.js"
   },
   "types": "./dist/index.d.ts",
   "files": [
