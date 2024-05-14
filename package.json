@@ -3,7 +3,10 @@
   "version": "8.0.0",
   "description": "🌯 🌯 Wrap you tests so that you can test both behaviour and components with less effort.",
   "type": "module",
-  "exports": "./dist/index.js",
+  "exports": {
+    ".": "./dist/index.js",
+    "./integration": "./dist/integration.js"
+  },
   "types": "./dist/index.d.ts",
   "files": [
     "dist"
@@ -66,7 +69,7 @@
     "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-prettier": "^5.1.1",
     "eslint-plugin-react": "^7.33.2",
-    "jsdom": "^23.0.1",
+    "jsdom": "^24.0.0",
     "prettier": "^3.1.1",
     "react": "^17.0.0",
     "react-dom": "^17.0.2",
