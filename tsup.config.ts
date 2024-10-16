@@ -6,9 +6,12 @@ export default defineConfig(options => ({
     integration: './src/integration.ts',
   },
   outDir: 'dist',
-  format: ['esm'],
+  format: ['cjs', 'esm'],
   tsconfig: './tsconfig.json',
   clean: true,
   dts: true,
   minify: !options?.watch,
+  outExtension: ({ format }) => ({
+    js: format === 'cjs' ? '.js' : '.mjs',
+  }),
 }))
