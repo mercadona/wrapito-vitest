@@ -295,3 +295,12 @@ git push origin v1.0.5
 ```
 
 This will run a workflow in github that will publish this version for you.
+
+If you need to release beta versions to test things, you may do so with the -beta tag. E.g:
+
+```
+git tag v1.0.5-beta1
+git push origin v1.0.5-beta1
+```
+
+This will run a workflow in github that will publish this version for you as a pre-release.
