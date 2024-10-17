@@ -21,9 +21,9 @@ jobs:
       - name: Publish package
         run: |
           if [[ ${{ github.ref }} == *-beta* ]]; then
-            npm publish --tag beta
+            npm run publish-package:beta
           else
-            npm publish
+            npm run publish-package
           fi
         env:
           NODE_AUTH_TOKEN: ${{secrets.npm_token}}

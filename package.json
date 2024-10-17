@@ -21,6 +21,7 @@
     "test:publish": "npm publish --dry-run",
     "build:types": "tsc --build",
     "publish-package": "npm run build && npm publish",
+    "publish-package:beta": "npm run build && npm publish --tag beta",
     "typecheck": "tsc --noEmit dist/index.d.ts"
   },
   "repository": {
