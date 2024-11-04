@@ -4,8 +4,7 @@
   "description": "🌯 🌯 Wrap you tests so that you can test both behaviour and components with less effort.",
   "type": "module",
   "exports": {
-    ".": "./dist/index.js",
-    "./integration": "./dist/integration.js"
+    ".": "./dist/index.js"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -32,7 +31,6 @@
     "react",
     "testing",
     "test",
-    "integration",
     "unit",
     "javascript",
     "dom",
@@ -87,7 +85,6 @@
   },
   "peerDependencies": {
     "react": "*",
-    "react-dom": "*",
-    "vitest": "*"
+    "react-dom": "*"
   }
 }
