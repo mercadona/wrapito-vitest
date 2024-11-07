@@ -65,7 +65,7 @@ export interface WrapExtensionAPI {
   addResponses: (responses: Array<WrapResponse>) => unknown
 }
 
-type Extension = <T>(extensionAPI: WrapExtensionAPI, args: T) => Wrap
+type Extension = <T>(extensionAPI: WrapExtensionAPI, args: T) => void
 
 type Extensions = {
   [key: string]: Extension
