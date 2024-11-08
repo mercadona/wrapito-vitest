@@ -10,7 +10,7 @@ it('should extend wrapito', async () => {
   const { wrap } = configure({
     mount: render,
     extend: {
-      withLogin: ({ addResponses }, username: string) =>
+      withLogin: ({ addResponses }, username: string, test: boolean) =>
         addResponses([
           {
             path: '/path/to/login/',
