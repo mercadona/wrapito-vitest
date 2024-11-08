@@ -1,13 +1,13 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import { vi, it, expect } from 'vitest'
-import { configure, typedConfig } from '../../src/index'
+import { configure } from '../../src/index'
 
 import { MyComponentWithLogin } from '../components.mock'
 
 it('should extend wrapito', async () => {
   const otherCustomExtension = vi.fn()
   const customArgs = { foo: 'bar' }
-  const { wrap } = typedConfig({
+  const { wrap } = configure({
     mount: render,
     extend: {
       withLogin: ({ addResponses }, username: string) =>

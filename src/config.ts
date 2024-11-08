@@ -24,13 +24,9 @@ function configure<T extends Extensions>(newConfig: Partial<Config<T>>) {
     ...newConfig,
     ...{ extend: { ...newConfig.extend } },
   }
-}
-
-const typedConfig = <T extends Extensions>(newConfig: Partial<Config<T>>) => {
-  configure(newConfig)
   return { wrap: (Component: any) => configWrap<T>(Component) }
 }
 
 const getConfig = (): Config<Extensions> => ({ ...config })
 
-export { configure, typedConfig, getConfig, Config, mount }
+export { configure, getConfig, Config, mount }
