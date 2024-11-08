@@ -3,12 +3,13 @@ import * as React from 'react'
 import { mockNetwork } from './mockNetwork'
 import { getConfig } from './config'
 import { updateOptions, getOptions } from './options'
-import type {
+import {
   Response,
   Wrap,
   WrapExtensionAPI,
   Extension,
   Extensions,
+  WrappedExtensions,
 } from './models'
 import { vi } from 'vitest'
 import type { MockedFunction } from 'vitest'
@@ -22,7 +23,7 @@ afterEach(() => {
   mockedFetch.mockRestore()
 })
 
-const wrap = (component: unknown): Wrap => {
+const wrap = (component: unknown) => {
   updateOptions({
     Component: component,
     responses: [],
@@ -35,7 +36,20 @@ const wrap = (component: unknown): Wrap => {
   return wrapWith()
 }
 
-const wrapWith = (): Wrap => {
+export const configWrap = <T extends Extensions>(component: unknown) => {
+  updateOptions({
+    Component: component,
+    responses: [],
+    props: {},
+    path: '',
+    hasPath: false,
+    debug: process.env.npm_config_debugRequests === 'true',
+  })
+
+  return wrapWith() as Wrap & WrappedExtensions<T>
+}
+
+const wrapWith = () => {
   const extensions = extendWith()
 
   return {

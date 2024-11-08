@@ -1,13 +1,13 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import { vi, it, expect } from 'vitest'
-import { wrap, configure } from '../../src/index'
+import { configure, typedConfig } from '../../src/index'
 
 import { MyComponentWithLogin } from '../components.mock'
 
 it('should extend wrapito', async () => {
   const otherCustomExtension = vi.fn()
   const customArgs = { foo: 'bar' }
-  configure({
+  const { wrap } = typedConfig({
     mount: render,
     extend: {
       withLogin: ({ addResponses }, username: string) =>
@@ -19,9 +19,15 @@ it('should extend wrapito', async () => {
             responseBody: username,
           },
         ]),
-      withOtherCustomExtension: () => otherCustomExtension(customArgs),
+      withOtherCustomExtension: ({}) => otherCustomExtension(customArgs),
     },
   })
+  wrap(MyComponentWithLogin)
+    .withNetwork()
+    .debugRequests()
+    .withOtherCustomExtension()
+    .withLogin('Fran Perea')
+    .mount()
   wrap(MyComponentWithLogin)
     .withLogin('Fran Perea')
     .withOtherCustomExtension()

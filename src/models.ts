@@ -44,10 +44,10 @@ export interface WrapResponse extends Partial<Response> {
 export type NetworkResponses = WrapResponse | WrapResponse[]
 
 export interface Wrap {
-  withNetwork: (responses?: NetworkResponses) => Wrap
-  atPath: (path: string, historyState?: object) => Wrap
-  withProps: (props: object) => Wrap
-  debugRequests: () => Wrap
+  withNetwork: (responses?: NetworkResponses) => Omit<this, 'withNetwork'>
+  atPath: (path: string, historyState?: object) => Omit<this, 'atPath'>
+  withProps: (props: object) => Omit<this, 'withProps'>
+  debugRequests: () => Omit<this, 'debugRequests'>
   mount: () => RenderResult
 }
 
@@ -65,7 +65,15 @@ export interface WrapExtensionAPI {
   addResponses: (responses: Array<WrapResponse>) => unknown
 }
 
-type Extension = <T>(extensionAPI: WrapExtensionAPI, args: T) => void
+type DropFirst<T extends unknown[]> = T extends [any, ...infer U] ? U : never
+
+type Extension = (extensionAPI: WrapExtensionAPI, ...args: any[]) => void
+type WrappedExtension<T extends Extension> = DropFirst<Parameters<T>>
+
+export type WrappedExtensions<T extends Extensions> = Record<
+  keyof T,
+  (...args: WrappedExtension<T[keyof T]>) => Wrap & WrappedExtensions<T>
+>
 
 type Extensions = {
   [key: string]: Extension
@@ -76,10 +84,10 @@ type Component = React.ReactElement<any, any>
 export type RenderResult = TLRenderResult | HTMLDivElement
 export type Mount = (component: Component) => RenderResult
 
-export interface Config {
+export interface Config<T> {
   defaultHost: string
   mount: Mount
-  extend: Extensions
+  extend: T
   changeRoute: (path: string) => void
   history?: BrowserHistory
   portal?: string

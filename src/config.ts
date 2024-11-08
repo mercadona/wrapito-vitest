@@ -1,6 +1,7 @@
 import { render } from 'react-dom'
 
-import type { Component, Config, RenderResult } from './models'
+import type { Component, Config, Extensions, RenderResult } from './models'
+import { configWrap } from './wrap'
 
 const mount = (Component: Component): RenderResult => {
   const rootNode = document.body.appendChild(document.createElement('div'))
@@ -10,20 +11,26 @@ const mount = (Component: Component): RenderResult => {
   return rootNode
 }
 
-let config: Config = {
+let config = {
   defaultHost: '',
   extend: {},
   mount,
   changeRoute: (path: string) => window.history.replaceState(null, '', path),
-}
+} satisfies Config<Extensions>
 
-function configure(newConfig: Partial<Config>) {
+function configure<T extends Extensions>(newConfig: Partial<Config<T>>) {
   config = {
     ...config,
     ...newConfig,
+    ...{ extend: { ...newConfig.extend } },
   }
 }
 
-const getConfig = (): Config => ({ ...config })
+const typedConfig = <T extends Extensions>(newConfig: Partial<Config<T>>) => {
+  configure(newConfig)
+  return { wrap: (Component: any) => configWrap<T>(Component) }
+}
 
-export { configure, getConfig, Config, mount }
+const getConfig = (): Config<Extensions> => ({ ...config })
+
+export { configure, typedConfig, getConfig, Config, mount }
