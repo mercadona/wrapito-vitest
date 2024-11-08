@@ -113,7 +113,7 @@ const debugRequests = () => {
 }
 
 const getMount = () => {
-  const { portal, changeRoute, history, mount } = getConfig()
+  const { portal, changeRoute, history, mount, defaultResponses } = getConfig()
   const { Component, props, responses, path, hasPath, debug, historyState } =
     getOptions()
 
@@ -137,7 +137,12 @@ const getMount = () => {
     changeRoute(path)
   }
 
-  mockNetwork(responses, debug)
+  let mockedResponses: Response[] = [...responses]
+  if (defaultResponses) {
+    mockedResponses = [...mockedResponses, ...defaultResponses]
+  }
+
+  mockNetwork(mockedResponses, debug)
 
   return mount(<C {...props} />)
 }
