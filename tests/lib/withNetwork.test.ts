@@ -1,4 +1,3 @@
-import React from 'react'
 import { render, screen, fireEvent } from '@testing-library/react'
 import { wrap, configure } from '../../src/index'
 import { vi, it, expect } from 'vitest'
@@ -218,4 +217,22 @@ it('should handle fetch requests with option when a string is passed', async () 
   )
 
   expect(response).toEqual({ foo: 'bar' })
+})
+
+it('should return an spy compatible with expect API', async () => {
+  configure({ mount: render })
+
+  wrap(MyComponentWithNetwork)
+    .withNetwork([
+      { path: 'my-host/path/', method: 'POST', responseBody: { foo: 'bar' } },
+      { path: 'my-host/path/with/response/', responseBody: { foo: 'bar' } },
+    ])
+    .mount()
+
+  expect(global.fetch).toHaveBeenLastCalledWith(
+    expect.objectContaining({
+      method: 'GET',
+      url: expect.stringContaining('my-host/path/with/response/'),
+    }),
+  )
 })

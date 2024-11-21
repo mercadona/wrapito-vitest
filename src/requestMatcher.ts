@@ -18,7 +18,7 @@ const getRequestMatcher =
 
     const mockedRequestHash = hash({
       url: isQueryParamsSensitive ? url : url.split('?')[0],
-      method: method,
+      method: method.toUpperCase(),
       requestBody: requestBody,
     })
 
