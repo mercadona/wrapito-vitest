@@ -1,16 +1,9 @@
 import React from 'react'
 import type { RenderResult as TLRenderResult } from '@testing-library/react'
 
-export type HttpMethod =
-  | 'GET'
-  | 'POST'
-  | 'PUT'
-  | 'PATCH'
-  | 'DELETE'
-  | 'OPTIONS'
-  | 'HEAD'
-  | 'CONNECT'
-  | 'TRACE'
+export type HttpMethod = UpperCaseHttpMethod & Lowercase<UpperCaseHttpMethod>
+
+type UpperCaseHttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'OPTIONS' | 'HEAD' | 'CONNECT' | 'TRACE'
 
 export interface WrapRequest extends Partial<Request> {
   _bodyInit?: string
