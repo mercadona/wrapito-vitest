@@ -1,7 +1,9 @@
 import React from 'react'
 import type { RenderResult as TLRenderResult } from '@testing-library/react'
 
-export type HttpMethod =
+export type HttpMethod = UpperCaseHttpMethod | Lowercase<UpperCaseHttpMethod>
+
+type UpperCaseHttpMethod =
   | 'GET'
   | 'POST'
   | 'PUT'

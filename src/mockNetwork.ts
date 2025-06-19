@@ -1,21 +1,22 @@
 import chalk from 'chalk'
 import type { Response, WrapRequest } from './models'
 import { getRequestMatcher } from './requestMatcher'
-import { vi } from 'vitest'
-import type { Mock } from 'vitest'
+import { enhancedSpy } from './utils/tinyspyWrapper'
+import type { MockInstance } from '../src/utils/types'
 
 declare global {
   interface Window {
-    fetch: Mock
+    fetch: MockInstance
   }
 }
 
 beforeEach(() => {
-  global.window.fetch = vi.fn()
+  // @ts-expect-error
+  global.window.fetch = enhancedSpy()
 })
 
 afterEach(() => {
-  global.window.fetch.mockRestore()
+  global.window.fetch.mockReset()
 })
 
 const createDefaultResponse = async () => {

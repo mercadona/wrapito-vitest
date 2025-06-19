@@ -2,7 +2,7 @@ import deepEqual from 'deep-equal'
 import { getConfig } from '../config'
 import { RequestOptions, WrapRequest } from '../models'
 
-import type { MockedFunction } from 'vitest'
+import { MockInstance } from 'vitest'
 
 const getDefaultHost = () => {
   const configuredHost = getConfig().defaultHost
@@ -23,7 +23,7 @@ export const findRequestsByPath = (
   expectedPath: string,
   options: RequestOptions = { method: 'GET' },
 ) => {
-  const typedFetch = fetch as MockedFunction<typeof fetch>
+  const typedFetch = fetch as MockInstance
   return typedFetch.mock.calls.filter(([call]) => {
     const url = getUrl(call)
     const defaultHost = getDefaultHost()
