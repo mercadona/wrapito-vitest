@@ -81,6 +81,7 @@ export interface Config {
   mount: Mount
   extend: Extensions
   changeRoute: (path: string) => void
+  defaultResponses?: Array<WrapResponse>
   history?: BrowserHistory
   portal?: string
   handleQueryParams?: boolean
